@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Properti Modern - Master Edition</title>
+    <meta name="description" content="Temukan hunian mewah dan eksklusif di jantung kota Surabaya. Apartemen dan villa modern dengan fasilitas terbaik.">
+    <meta property="og:title" content="Properti Modern - Hunian Mewah Surabaya">
+    <meta property="og:description" content="Tersedia 350+ Unit Apartemen & Villa Eksklusif.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:url" content="https://example.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS DASAR & LAYOUT --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; line-height: 1.6; color: #333; background-color: #f4f4f4; scroll-behavior: smooth; }
+        
+        header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; padding: 15px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        header .container { 
+            max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; 
+        }
+        nav ul { list-style: none; display: flex; gap: 20px; }
+        nav a { color: white; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: 0.3s; }
+        nav a:hover { color: #ffd700; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        /* --- HERO SECTION --- */
+        .hero { 
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80') center/cover; 
+            height: 400px; display: flex; align-items: center; justify-content: center; text-align: center; color: white; border-radius: 0 0 20px 20px;
+        }
+        .hero h2 { font-size: 2.5rem; margin-bottom: 10px; }
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 1.8rem; }
+            .hero p { font-size: 0.9rem; }
+        }
+
+        /* --- BERITA KEMAJUAN --- */
+        .news-section { background: white; padding: 25px; border-radius: 15px; margin: 20px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .progress-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .progress-table th, .progress-table td { border: 1px solid #eee; padding: 12px; text-align: left; }
+        .progress-table th { background-color: #667eea; color: white; }
+        .status-sold { color: #27ae60; font-weight: bold; }
+        @media (max-width: 600px) {
+            .progress-table, .progress-table tbody, .progress-table tr, .progress-table td { display: block; width: 100%; }
+            .progress-table thead { display: none; }
+            .progress-table tr { margin-bottom: 15px; border: 1px solid #eee; border-radius: 5px; }
+            .progress-table td { text-align: right; padding-left: 50%; position: relative; }
+            .progress-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: calc(50% - 20px);
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+        }
+
+        /* --- FILTER BAR --- */
+        .filter-bar { 
+            background: white; padding: 20px; border-radius: 10px; display: flex; flex-wrap: wrap; gap: 15px; 
+            margin-bottom: 20px; align-items: center; position: sticky; top: 80px; z-index: 900; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .filter-bar input, .filter-bar select { padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-family: 'Poppins'; }
+        @media (max-width: 600px) {
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .filter-bar input, .filter-bar select { width: 100%; }
+        }
+
+        /* --- PROPERTY GRID --- */
+        .property-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .property-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s; position: relative; }
+        .property-card:hover { transform: translateY(-10px); }
+        .property-card img { width: 100%; height: 200px; object-fit: cover; }
+        .floor-badge { position: absolute; top: 10px; right: 10px; background: #ffd700; color: #333; padding: 2px 10px; border-radius: 5px; font-weight: bold; font-size: 0.8rem; }
+        .p-content { padding: 20px; }
+        .price { color: #667eea; font-size: 1.2rem; font-weight: 700; margin: 10px 0; }
+
+        /* --- PAGES (DETAIL, WISHLIST) --- */
+        .page { display: none; background: white; padding: 30px; border-radius: 20px; margin-top: 20px; }
+        .show { display: block !important; }
+        .btn { 
+            background: #ffd700; color: #333; padding: 10px 20px; border: none; border-radius: 8px; 
+            font-weight: 600; cursor: pointer; transition: 0.3s; text-decoration: none; display: inline-block;
+        }
+        .btn:hover { background: #e6c200; }
+        .btn-wish { background: #ff6b6b; color: white; margin-left: 10px; }
+        @media (max-width: 768px) {
+            #detailPage > div { flex-direction: column; }
+            #detImg { max-width: 100%; }
+        }
+
+        /* --- FORM PEMBAYARAN --- */
+        .payment-form { max-width: 500px; margin: 30px 0; padding: 20px; border: 1px solid #eee; border-radius: 10px; }
+        .payment-form input, .payment-form select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; }
+
+        .scroll-top { position: fixed; bottom: 30px; right: 30px; background: #667eea; color: white; width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer; display: none; font-size: 1.5rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Properti Modern</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showPage('home')">Beranda</a></li>
+                <li><a href="#" onclick="showPage('wishlistPage')">Wishlist</a></li>
+                <li><a href="#news">Berita</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="container" id="mainContent">
+    <section class="hero">
+        <div>
+            <h2>Hunian Mewah di Jantung Kota</h2>
+            <p>Tersedia 350+ Unit Apartemen & Villa Eksklusif</p>
+        </div>
+    </section>
+
+    <section id="news" class="news-section">
+        <h3>📈 Kemajuan Penjualan (Februari 2026)</h3>
+        <table class="progress-table">
+            <thead>
+                <tr>
+                    <th>Proyek</th>
+                    <th>Total Unit</th>
+                    <th>Terjual</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="Proyek">City View Apartment</td>
+                    <td data-label="Total Unit">350 Unit</td>
+                    <td data-label="Terjual">285 Unit</td>
+                    <td data-label="Status" class="status-sold">81% Terjual (Hampir Habis!)</td>
+                </tr>
+                <tr>
+                    <td data-label="Proyek">Modern Luxury Villa</td>
+                    <td data-label="Total Unit">50 Unit</td>
+                    <td data-label="Terjual">48 Unit</td>
+                    <td data-label="Status" class="status-sold">Sisa 2 Unit!</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <div class="filter-bar">
+        <input type="text" id="searchInput" placeholder="Cari nama unit..." oninput="filterData()">
+        <select id="floorFilter" onchange="filterData()">
+            <option value="all">Semua Lantai</option>
+        </select>
+        <select id="catFilter" onchange="filterData()">
+            <option value="all">Semua Tipe</option>
+            <option value="Apartemen">Apartemen</option>
+            <option value="Rumah">Rumah</option>
+            <option value="Villa">Villa</option>
+        </select>
+        <span id="counter">Menampilkan: 0 Unit</span>
+    </div>
+
+    <div class="property-grid" id="propertyGrid"></div>
+    <div style="text-align: center; margin-top: 40px;">
+        <button id="loadMoreBtn" class="btn" onclick="loadMore()">Tampilkan Lebih Banyak</button>
+    </div>
+</div>
+
+<div id="detailPage" class="container page">
+    <button class="btn" onclick="showPage('home')">← Kembali</button>
+    <div style="display: flex; flex-wrap: wrap; gap: 30px; margin-top: 20px;">
+        <img id="detImg" style="width: 100%; max-width: 600px; border-radius: 15px; height: 400px; object-fit: cover;" alt="Gambar Properti">
+        <div style="flex: 1; min-width: 300px;">
+            <h2 id="detTitle"></h2>
+            <p id="detLoc" style="color: #666;"></p>
+            <div id="detPrice" class="price" style="font-size: 2rem;"></div>
+            <p id="detDesc" style="margin-bottom: 20px;"></p>
+            
+            <div class="payment-form">
+                <h3>💳 Form Pembayaran Cepat</h3>
+                <form id="payForm">
+                    <input type="text" placeholder="Nama di Kartu" required>
+                    <input type="text" placeholder="Nomor Kartu (16 Digit)" required>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" placeholder="MM/YY" required>
+                        <input type="text" placeholder="CVV" required>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">BAYAR SEKARANG</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="wishlistPage" class="container page">
+    <button class="btn" onclick="showPage('home')">← Kembali</button>
+    <h2 style="margin: 20px 0;">❤ Wishlist Anda</h2>
+    <div class="property-grid" id="wishlistGrid"></div>
+</div>
+
+<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo(0,0)">↑</button>
+
+<script>
+    /* --- DATA ENGINE --- */
+    const properties = [];
+    const categories = ["Apartemen", "Rumah", "Villa"];
+    
+    for (let i = 1; i <= 350; i++) {
+        const floor = Math.ceil(i / 17.5);
+        properties.push({
+            id: i,
+            title: `City View Unit ${String.fromCharCode(65 + (i % 26))}${i}`,
+            category: "Apartemen",
+            floor: floor,
+            price: `Rp ${(800 + (floor * 10))}.000.000`,
+            loc: i % 2 === 0 ? "Surabaya Pusat" : "Surabaya Barat",
+            desc: "Unit apartemen modern dengan pemandangan kota terbaik, akses gym, dan kolam renang.",
+            img: `https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&sig=${i}`
+        });
+    }
+
+    let displayedLimit = 12;
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+    /* --- UI ENGINE --- */
+    function init() {
+        const floorSel = document.getElementById('floorFilter');
+        for (let f = 1; f <= 20; f++) {
+            const opt = document.createElement('option');
+            opt.value = f; opt.innerText = `Lantai ${f}`;
+            floorSel.appendChild(opt);
+        }
+        renderHome();
+    }
+
+    function renderHome() {
+        const grid = document.getElementById('propertyGrid');
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const floor = document.getElementById('floorFilter').value;
+        const cat = document.getElementById('catFilter').value;
+
+        let filtered = properties.filter(p => {
+            const matchSearch = p.title.toLowerCase().includes(search);
+            const matchFloor = floor === 'all' || p.floor == floor;
+            const matchCat = cat === 'all' || p.category == cat;
+            return matchSearch && matchFloor && matchCat;
+        });
+
+        document.getElementById('counter').innerText = `Menampilkan: ${filtered.length} Unit`;
+        
+        const toShow = filtered.slice(0, displayedLimit);
+        grid.innerHTML = toShow.map(p => `
+            <div class="property-card">
+                <span class="floor-badge">Lantai ${p.floor}</span>
+                <img src="${p.img}" alt="Unit ${p.title}" loading="lazy">
+                <div class="p-content">
+                    <h3>${p.title}</h3>
+                    <p style="font-size:0.8rem; color:#888">${p.loc}</p>
+                    <p class="price">${p.price}</p>
+                    <button class="btn" onclick="showDetail(${p.id})">Detail</button>
+                    <button class="btn btn-wish" onclick="toggleWish(${p.id})">❤</button>
+                </div>
+            </div>
+        `).join('');
+
+        document.getElementById('loadMoreBtn').style.display = (displayedLimit >= filtered.length) ? 'none' : 'inline-block';
+    }
+
+    function filterData() {
+        displayedLimit = 12;
+        renderHome();
+    }
+
+    function loadMore() {
+        displayedLimit += 12;
+        renderHome();
+    }
